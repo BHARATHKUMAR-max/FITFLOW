@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - FitFlow{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+    
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 0;
+    }
+    
+    .login-card {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+    
+    .login-card .card-body {
+        padding: 3rem;
+    }
+    
+    .login-side {
+        background: linear-gradient(135deg, #2196F3 0%, #4CAF50 100%);
+        color: white;
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .login-side img {
+        max-width: 100%;
+        margin-bottom: 2rem;
+    }
+    
+    .login-title {
+        font-weight: 700;
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+        color: #333;
+    }
+    
+    .form-control {
+        border-radius: 8px;
+        padding: 0.8rem 1rem 0.8rem 3rem;
+        border: 1px solid #e0e0e0;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+    
+    .form-control:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+    }
+    
+    .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group i {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #aaa;
+    }
+    
+    .btn-login {
+        background: linear-gradient(to right, #4CAF50, #2196F3);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        padding: 0.8rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+    }
+    
+    .btn-login:hover {
+        background: linear-gradient(to right, #3d8b40, #0c7cd5);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+    }
+    
+    .trust-badge {
+        text-align: center;
+        margin-top: 2rem;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+    }
+    
+    .trust-badge i {
+        font-size: 1.5rem;
+        color: #4CAF50;
+        margin-bottom: 0.5rem;
+    }
+    
+    .secondary-links {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+    
+    .secondary-links a {
+        color: #2196F3;
+        font-weight: 500;
+        text-decoration: none;
+        margin: 0 1rem;
+        padding: 0.5rem 0;
+        position: relative;
+        transition: all 0.3s;
+    }
+    
+    .secondary-links a:hover {
+        color: #4CAF50;
+    }
+    
+    .secondary-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #4CAF50;
+        transition: width 0.3s;
+    }
+    
+    .secondary-links a:hover::after {
+        width: 100%;
+    }
+    
+    @media (max-width: 991px) {
+        .login-side {
+            display: none;
+        }
+        
+        .login-card .card-body {
+            padding: 2rem;
+        }
+        
+        .login-title {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="login-card">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            <div class="card-body">
+                                <h1 class="login-title text-center">Welcome to FitFlow</h1>
+                                
+                                {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <p>Your username and password didn't match. Please try again.</p>
+                                </div>
+                                {% endif %}
+                                
+                                <form method="post">
+                                    {% csrf_token %}
+                                    
+                                    <div class="form-group">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-login">Sign In</button>
+                                    </div>
+                                </form>
+                                
+                                <div class="secondary-links">
+                                    <a href="{% url 'register' %}"><i class="fas fa-user-plus me-1"></i> Create Account</a>
+                                    <a href="{% url 'forgot_password' %}"><i class="fas fa-key me-1"></i> Forgot Password?</a>
+                                </div>
+                                
+                                <div class="trust-badge">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <p class="mb-0 fw-bold">Trusted by Fitness Enthusiasts</p>
+                                    <p class="small text-muted mb-0">"Rated #1 Supplement Store by Health Magazine 2025"</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 login-side">
+                            <div>
+                                <h2 class="h3 mb-4 fw-bold">Your Journey to Better Health Starts Here</h2>
+                                <p class="mb-4">Access premium supplements scientifically formulated to support your fitness goals.</p>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Premium Quality Ingredients</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Science-Backed Formulations</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Fast Shipping Nationwide</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-5">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>100% Satisfaction Guarantee</span>
+                                </div>
+                                
+                                <img src="/static/images/FitFlow logo.png" alt="FitFlow" class="mb-3" style="max-width: 160px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

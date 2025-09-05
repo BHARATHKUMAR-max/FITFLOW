@@ -1,0 +1,323 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout - FitFlow{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Checkout</h1>
+    
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="mb-4">Shipping Information</h4>
+                    
+                    <form method="post" action="{% url 'checkout' %}">
+                        {% csrf_token %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="full_name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="full_name" name="full_name" value="{{ user.get_full_name }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" name="city" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="state" class="form-label">State</label>
+                                <input type="text" class="form-control" id="state" name="state" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="pincode" class="form-label">Pincode / Zip Code</label>
+                            <input type="text" class="form-control" id="pincode" name="pincode" required>
+                        </div>
+                        
+                        <h4 class="mb-4">Payment Method</h4>
+                        
+                        <div class="mb-3">
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment_method" id="card" value="card" checked>
+                                <label class="form-check-label" for="card">
+                                    Credit/Debit Card
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment_method" id="paypal" value="paypal">
+                                <label class="form-check-label" for="paypal">
+                                    PayPal
+                                </label>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="payment_method" id="cod" value="cod">
+                                <label class="form-check-label" for="cod">
+                                    Cash on Delivery
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div id="card-payment-details" class="card-payment-details mb-4">
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <label for="card_number" class="form-label">Card Number</label>
+                                    <input type="text" class="form-control" id="card_number" placeholder="1234 5678 9012 3456">
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label for="expiry" class="form-label">Expiry Date</label>
+                                    <input type="text" class="form-control" id="expiry" placeholder="MM/YY">
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="cvv" class="form-label">CVV</label>
+                                    <input type="text" class="form-control" id="cvv" placeholder="123">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="name_on_card" class="form-label">Name on Card</label>
+                                    <input type="text" class="form-control" id="name_on_card">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                I agree to the <a href="#" class="text-decoration-none">terms and conditions</a> and <a href="#" class="text-decoration-none">privacy policy</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg w-100">Complete Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="mb-4">Order Summary</h4>
+                    
+                    {% for item in cart_items %}
+                    <div class="d-flex mb-3">
+                        <div class="flex-shrink-0">
+                            {% if item.product.image %}
+                                <img src="{{ item.product.image.url }}" class="cart-item-img rounded" alt="{{ item.product.name }}">
+                            {% else %}
+                                <img src="https://source.unsplash.com/80x80/?supplement" class="cart-item-img rounded" alt="{{ item.product.name }}">
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                            <h6 class="mb-0">{{ item.product.name }}</h6>
+                            <p class="text-muted mb-0">Qty: {{ item.quantity }}</p>
+                            <p class="fw-bold mb-0">${{ item.subtotal }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <hr>
+                    
+                    <!-- Enhanced Coupon Section -->
+                    <div class="coupon-section mb-3">
+                        <div class="accordion" id="couponAccordion">
+                            <div class="accordion-item border-0">
+                                <h2 class="accordion-header" id="couponHeading">
+                                    <button class="accordion-button p-0 bg-transparent shadow-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#couponCollapse" aria-expanded="false" aria-controls="couponCollapse">
+                                        <i class="fas fa-tag me-2 text-primary"></i> Have a discount code?
+                                    </button>
+                                </h2>
+                                <div id="couponCollapse" class="accordion-collapse collapse" aria-labelledby="couponHeading" data-bs-parent="#couponAccordion">
+                                    <div class="pt-3">
+                                        <form id="couponForm" class="coupon-form">
+                                            <div class="input-group">
+                                                <input type="text" id="couponCode" class="form-control" placeholder="Enter code" required>
+                                                <button id="applyCoupon" class="btn btn-primary" type="submit">
+                                                    <span id="couponBtnText">Apply</span>
+                                                    <span id="couponSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                                                </button>
+                                            </div>
+                                            <div id="couponFeedback" class="mt-2 small"></div>
+                                            <div id="couponSuggestions" class="mt-2">
+                                                <span class="badge bg-light text-dark border me-1 suggested-coupon">WELCOME10</span>
+                                                <span class="badge bg-light text-dark border me-1 suggested-coupon">FITFLOW20</span>
+                                                <span class="badge bg-light text-dark border suggested-coupon">FREESHIP</span>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal</span>
+                        <span>${{ cart.total }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping</span>
+                        <span>FREE</span>
+                    </div>
+                    
+                    <!-- Discount row (initially hidden) -->
+                    <div id="discountRow" class="d-flex justify-content-between mb-2 discount-row d-none">
+                        <span class="text-success">Discount</span>
+                        <span class="text-success" id="discountAmount">-$0.00</span>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between mb-0">
+                        <span class="fw-bold">Total</span>
+                        <span class="fw-bold fs-5" id="orderTotal">${{ cart.total }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Remove the old promo code section since we've added the enhanced version -->
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+        const cardDetails = document.getElementById('card-payment-details');
+        
+        paymentMethods.forEach(method => {
+            method.addEventListener('change', function() {
+                if (this.value === 'card') {
+                    cardDetails.style.display = 'block';
+                } else {
+                    cardDetails.style.display = 'none';
+                }
+            });
+        });
+        
+        // Coupon functionality
+        const couponForm = document.getElementById('couponForm');
+        const couponCode = document.getElementById('couponCode');
+        const couponFeedback = document.getElementById('couponFeedback');
+        const discountRow = document.getElementById('discountRow');
+        const discountAmount = document.getElementById('discountAmount');
+        const orderTotal = document.getElementById('orderTotal');
+        const couponBtnText = document.getElementById('couponBtnText');
+        const couponSpinner = document.getElementById('couponSpinner');
+        const suggestedCoupons = document.querySelectorAll('.suggested-coupon');
+        
+        // Original total (without discount)
+        const originalTotal = {{ cart.total }};
+        
+        // Handle coupon application
+        couponForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading spinner
+            couponBtnText.classList.add('d-none');
+            couponSpinner.classList.remove('d-none');
+            
+            // Simulate API call delay
+            setTimeout(function() {
+                const code = couponCode.value.trim().toUpperCase();
+                
+                // Reset previous feedback
+                couponFeedback.innerHTML = '';
+                couponFeedback.className = 'mt-2 small';
+                
+                // Check valid coupon codes
+                let discount = 0;
+                let message = '';
+                
+                if (code === 'WELCOME10') {
+                    discount = originalTotal * 0.10;
+                    message = '<i class="fas fa-check-circle text-success"></i> 10% discount applied!';
+                } else if (code === 'FITFLOW20') {
+                    discount = originalTotal * 0.20;
+                    message = '<i class="fas fa-check-circle text-success"></i> 20% discount applied!';
+                } else if (code === 'FREESHIP') {
+                    discount = 0;
+                    message = '<i class="fas fa-check-circle text-success"></i> Free shipping applied! (already included)';
+                } else {
+                    message = '<i class="fas fa-times-circle text-danger"></i> Invalid coupon code';
+                }
+                
+                // Update UI
+                couponFeedback.innerHTML = message;
+                
+                if (discount > 0) {
+                    // Show discount row
+                    discountRow.classList.remove('d-none');
+                    
+                    // Format discount amount
+                    const formattedDiscount = '-$' + discount.toFixed(2);
+                    discountAmount.textContent = formattedDiscount;
+                    
+                    // Calculate new total
+                    const newTotal = originalTotal - discount;
+                    orderTotal.textContent = '$' + newTotal.toFixed(2);
+                    
+                    // Add success class
+                    couponFeedback.className = 'mt-2 small text-success';
+                    
+                    // Add applied class to coupon field
+                    couponCode.classList.add('is-valid');
+                } else if (code === 'FREESHIP') {
+                    // Success but no price change
+                    couponFeedback.className = 'mt-2 small text-success';
+                    couponCode.classList.add('is-valid');
+                } else {
+                    // Invalid coupon
+                    couponFeedback.className = 'mt-2 small text-danger';
+                    couponCode.classList.add('is-invalid');
+                    
+                    // Reset total and hide discount row
+                    orderTotal.textContent = '$' + originalTotal.toFixed(2);
+                    discountRow.classList.add('d-none');
+                }
+                
+                // Hide loading spinner
+                couponBtnText.classList.remove('d-none');
+                couponSpinner.classList.add('d-none');
+            }, 800); // Simulate server delay
+        });
+        
+        // Make suggested coupons clickable
+        suggestedCoupons.forEach(coupon => {
+            coupon.addEventListener('click', function() {
+                couponCode.value = this.textContent.trim();
+                // Auto-apply the coupon
+                couponForm.dispatchEvent(new Event('submit'));
+            });
+        });
+        
+        // Clear validation when typing
+        couponCode.addEventListener('input', function() {
+            this.classList.remove('is-valid', 'is-invalid');
+            couponFeedback.innerHTML = '';
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %} 

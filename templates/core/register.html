@@ -1,0 +1,246 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - FitFlow{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+    
+    .register-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 0;
+    }
+    
+    .register-card {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+    
+    .register-card .card-body {
+        padding: 3rem;
+    }
+    
+    .register-side {
+        background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
+        color: white;
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .register-side img {
+        max-width: 100%;
+        margin-bottom: 2rem;
+    }
+    
+    .register-title {
+        font-weight: 700;
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+        color: #333;
+    }
+    
+    .form-control {
+        border-radius: 8px;
+        padding: 0.8rem 1rem 0.8rem 3rem;
+        border: 1px solid #e0e0e0;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+    
+    .form-control:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+    }
+    
+    .form-group {
+        position: relative;
+        margin-bottom: 1.5rem;
+    }
+    
+    .form-group i {
+        position: absolute;
+        left: 1rem;
+        top: 14px;
+        color: #aaa;
+    }
+    
+    .btn-register {
+        background: linear-gradient(to right, #4CAF50, #2196F3);
+        border: none;
+        color: white;
+        border-radius: 8px;
+        padding: 0.8rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+        box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+    }
+    
+    .btn-register:hover {
+        background: linear-gradient(to right, #3d8b40, #0c7cd5);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+    }
+    
+    .secondary-links {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+    
+    .secondary-links a {
+        color: #2196F3;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 0.5rem 0;
+        position: relative;
+        transition: all 0.3s;
+    }
+    
+    .secondary-links a:hover {
+        color: #4CAF50;
+    }
+    
+    .secondary-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: #4CAF50;
+        transition: width 0.3s;
+    }
+    
+    .secondary-links a:hover::after {
+        width: 100%;
+    }
+    
+    @media (max-width: 991px) {
+        .register-side {
+            display: none;
+        }
+        
+        .register-card .card-body {
+            padding: 2rem;
+        }
+        
+        .register-title {
+            font-size: 1.8rem;
+        }
+    }
+    
+    .form-text {
+        color: #777;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+    
+    .form-text ul {
+        padding-left: 1rem;
+        margin-bottom: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="register-card">
+                    <div class="row g-0">
+                        <div class="col-lg-6 register-side order-lg-2">
+                            <div>
+                                <h2 class="h3 mb-4 fw-bold">Join the FitFlow Community</h2>
+                                <p class="mb-4">Create your account to unlock exclusive benefits and start your health journey today.</p>
+                                
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Exclusive Member Discounts</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Personalized Recommendations</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Early Access to New Products</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-5">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Save Favorite Products</span>
+                                </div>
+                                
+                                <img src="/static/images/FitFlow logo.png" alt="FitFlow" class="mb-3" style="max-width: 160px;">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 order-lg-1">
+                            <div class="card-body">
+                                <h1 class="register-title text-center">Create Account</h1>
+                                
+                                {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <p>Please correct the errors below:</p>
+                                    {% for field in form %}
+                                        {% if field.errors %}
+                                            <p>{{ field.label }}: {{ field.errors|first }}</p>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                
+                                <form method="post">
+                                    {% csrf_token %}
+                                    
+                                    <div class="form-group">
+                                        <i class="fas fa-user"></i>
+                                        <input type="text" name="username" id="id_username" class="form-control" placeholder="Username" required>
+                                        <div class="form-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Password" required>
+                                        <div class="form-text">
+                                            <ul>
+                                                <li>Your password can't be too similar to your other personal information.</li>
+                                                <li>Your password must contain at least 8 characters.</li>
+                                                <li>Your password can't be a commonly used password.</li>
+                                                <li>Your password can't be entirely numeric.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <i class="fas fa-lock"></i>
+                                        <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm Password" required>
+                                        <div class="form-text">Enter the same password as before, for verification.</div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2">
+                                        <button type="submit" class="btn btn-register">Register</button>
+                                    </div>
+                                </form>
+                                
+                                <div class="secondary-links">
+                                    <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt me-1"></i> Already have an account? Login</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

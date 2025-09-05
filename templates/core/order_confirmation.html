@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Confirmation - FitFlow{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 5rem;"></i>
+                    </div>
+                    <h1 class="mb-4">Thank You for Your Order!</h1>
+                    <p class="lead mb-4">Your order has been placed successfully and is being processed.</p>
+                    <div class="mb-4">
+                        <h5>Order #{{ order.id }}</h5>
+                        <p class="text-muted">Placed on {{ order.created_at|date:"F d, Y" }}</p>
+                    </div>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'order_detail' order.id %}" class="btn btn-primary">View Order Details</a>
+                        <a href="{% url 'product_list' %}" class="btn btn-outline-primary">Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="mb-4">Order Summary</h3>
+                    
+                    <div class="table-responsive mb-4">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th class="text-end">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                <tr>
+                                    <td>{{ item.product.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td class="text-end">${{ item.subtotal }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="2" class="text-end">Subtotal:</th>
+                                    <th class="text-end">${{ order.total_amount }}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="text-end">Shipping:</th>
+                                    <td class="text-end">FREE</td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" class="text-end">Total:</th>
+                                    <th class="text-end">${{ order.total_amount }}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-4 mb-md-0">
+                            <h5>Shipping Information</h5>
+                            <p class="mb-1">{{ order.full_name }}</p>
+                            <p class="mb-1">{{ order.address }}</p>
+                            <p class="mb-1">{{ order.city }}, {{ order.state }} {{ order.pincode }}</p>
+                            <p class="mb-1">Phone: {{ order.phone }}</p>
+                            <p class="mb-0">Email: {{ order.email }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Order Status</h5>
+                            <p class="mb-1">
+                                Status: 
+                                <span class="badge bg-primary">{{ order.status|title }}</span>
+                            </p>
+                            <p class="mb-1">Order Date: {{ order.created_at|date:"F d, Y" }}</p>
+                            <p class="mb-0">Order ID: #{{ order.id }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
