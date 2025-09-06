@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^!s_z^caq2e(20v*-gjmi5+sb*bfjjmu=_i!_x2alzx38vsgr9'
+SECRET_KEY = os.getenv('SECRET_KEY', '00o0_*h+5ww-trw56byaz3mjmi-)zm9d#e8^az$t!eejf$tdib')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'core',  # Our main app
     
     'cloudinary_storage',
-    'django.contrib.staticfiles',  # keep this
     'cloudinary',
     
 ]
@@ -149,3 +148,34 @@ LOGIN_REDIRECT_URL = 'home'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Cloudinary Configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'du8elpn5q',
+    'API_KEY': '483375666414781',
+    'API_SECRET': 'zaIcRcSAzpQiGL-T9pJ-m16kLd8',
+}
+
+# Security Settings for Production
+# Only apply these settings when not in DEBUG mode (production)
+if not DEBUG:
+    # HTTPS Security Settings
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
+    # HTTP Strict Transport Security (HSTS)
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    
+    # Secure Cookies
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    
+    # Additional Security Headers
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+    
+    # Secure Referrer Policy
+    SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
