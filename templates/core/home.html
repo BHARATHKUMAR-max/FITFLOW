@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}FitFlow - Premium Supplements & Fitness Products{% endblock %}
 
@@ -12,7 +13,15 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="/static/images/Homepage hero_banner image .png" class="d-block w-100" alt="FitFlow Hero Banner">
+                <img src="{% static 'images/Homepage hero_banner image .png' %}" 
+                     class="d-block w-100" 
+                     alt="FitFlow Hero Banner"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="carousel-caption" style="display:none;">
+                    <h1 class="display-4 fw-bold">Premium Quality Supplements</h1>
+                    <p class="lead fw-bold">Scientifically formulated to support your fitness journey</p>
+                    <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg mt-3">Shop Now</a>
+                </div>
                 <div class="carousel-caption">
                     <h1 class="display-4 fw-bold">Premium Quality Supplements</h1>
                     <p class="lead fw-bold">Scientifically formulated to support your fitness journey</p>
@@ -20,7 +29,15 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="/static/images/Promotional banner images for special offers.png" class="d-block w-100" alt="Special Offers">
+                <img src="{% static 'images/Promotional banner images for special offers.png' %}" 
+                     class="d-block w-100" 
+                     alt="Special Offers"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="carousel-caption" style="display:none;">
+                    <h1 class="display-4 fw-bold">Special Offers</h1>
+                    <p class="lead fw-bold">Limited-time deals on our most popular products</p>
+                    <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg mt-3">View Deals</a>
+                </div>
                 <div class="carousel-caption">
                     <h1 class="display-4 fw-bold">Special Offers</h1>
                     <p class="lead fw-bold">Limited-time deals on our most popular products</p>
