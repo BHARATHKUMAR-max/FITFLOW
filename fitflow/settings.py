@@ -29,9 +29,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', '00o0_*h+5ww-trw56byaz3mjmi-)zm9d#e8^az$t!e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["fitflow-4.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["fitflow-5.onrender.com", "localhost", "127.0.0.1"]
 
-CSRF_TRUSTED_ORIGINS = ["https://fitflow-4.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://fitflow-5.onrender.com"]
 
 
 
@@ -142,9 +142,15 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# Media files - Using Cloudinary for production
+if DEBUG:
+    # Use local media files for development
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    # Use Cloudinary for production
+    MEDIA_URL = ''
+    MEDIA_ROOT = ''
 
 # Authentication settings
 LOGIN_URL = 'login'
@@ -159,9 +165,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Cloudinary Configuration
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'du8elpn5q',
-    'API_KEY': '483375666414781',
-    'API_SECRET': 'zaIcRcSAzpQiGL-T9pJ-m16kLd8',
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME', 'du8elpn5q'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY', '483375666414781'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'zaIcRcSAzpQiGL-T9pJ-m16kLd8'),
 }
 
 # Security Settings for Production
