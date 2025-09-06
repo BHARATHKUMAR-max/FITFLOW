@@ -26,8 +26,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # Authentication URLs
-    path('', RedirectView.as_view(url='login/'), name='root'),
-    path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
+    path('', RedirectView.as_view(url='login/', permanent=False), name='root'),
+    path('login/', auth_views.LoginView.as_view(template_name='core/login.html', redirect_authenticated_user=True), name='login'),
     path('forgot-password/', forgot_password, name='forgot_password'),
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='core/forgot_password.html'), name='password_reset'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
@@ -41,7 +41,6 @@ urlpatterns = [
 ]
 
 # Add static and media URLs for development
-# if settings.DEBUG:
-    # Add static and media URLs
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
