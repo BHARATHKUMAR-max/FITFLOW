@@ -45,9 +45,11 @@ CLOUDINARY_URL=cloudinary://483375666414781:zaIcRcSAzpQiGL-T9pJ-m16kLd8@du8elpn5
 2. **Configure Build Settings**
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `python manage.py migrate && python manage.py collectstatic --noinput && gunicorn fitflow.wsgi`
+   - **Alternative Start Command**: `python manage.py migrate && python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:$PORT`
 
 3. **Set Environment Variables**
    - Add SECRET_KEY and CLOUDINARY_URL in Render dashboard
+   - Note: Render automatically provides $PORT environment variable
 
 4. **Deploy**
    - Click "Deploy" and wait for build to complete
