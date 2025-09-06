@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-^!s_z^caq2e(20v*-gjmi5+sb*bfjjmu=_i!_x2alzx38vsgr9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["fitflow-1.onrender.com", "localhost", "127.0.0.1"]
 
