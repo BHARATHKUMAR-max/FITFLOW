@@ -29,9 +29,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', '00o0_*h+5ww-trw56byaz3mjmi-)zm9d#e8^az$t!e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["fitflow-5.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["fitflow-6.onrender.com", "localhost", "127.0.0.1"]
 
-CSRF_TRUSTED_ORIGINS = ["https://fitflow-5.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://fitflow-6.onrender.com"]
 
 
 
@@ -48,8 +48,16 @@ INSTALLED_APPS = [
     
     'cloudinary_storage',
     'cloudinary',
-    
 ]
+
+# Cloudinary storage configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME', 'du8elpn5q'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY', '483375666414781'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'zaIcRcSAzpQiGL-T9pJ-m16kLd8'),
+    'SECURE': True,
+    'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -161,14 +169,12 @@ LOGIN_REDIRECT_URL = 'home'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# File storage configuration
+if DEBUG:
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+else:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# Cloudinary Configuration
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME', 'du8elpn5q'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY', '483375666414781'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'zaIcRcSAzpQiGL-T9pJ-m16kLd8'),
-}
 
 # Security Settings for Production
 # Only apply these settings when not in DEBUG mode (production)
