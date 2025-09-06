@@ -29,9 +29,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', '00o0_*h+5ww-trw56byaz3mjmi-)zm9d#e8^az$t!e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["fitflow-6.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["fitflow-7.onrender.com", "localhost", "127.0.0.1"]
 
-CSRF_TRUSTED_ORIGINS = ["https://fitflow-6.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://fitflow-7.onrender.com"]
 
 
 
@@ -57,6 +57,9 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', 'zaIcRcSAzpQiGL-T9pJ-m16kLd8'),
     'SECURE': True,
     'STATIC_IMAGES_EXTENSIONS': ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+    'STATIC_IMAGES_TRANSFORMATION': [
+        {'quality': 'auto', 'fetch_format': 'auto'},
+    ],
 }
 
 MIDDLEWARE = [
