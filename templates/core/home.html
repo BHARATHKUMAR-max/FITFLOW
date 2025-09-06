@@ -56,6 +56,59 @@
     </div>
 </section>
 
+<!-- Fallback Hero Section (if carousel doesn't work) -->
+<section class="hero-section-fallback" style="display: none; background: linear-gradient(135deg, #2196F3, #4CAF50); color: white; padding: 100px 0; text-align: center;">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-4">Premium Quality Supplements</h1>
+        <p class="lead fw-bold mb-4">Scientifically formulated to support your fitness journey</p>
+        <a href="{% url 'product_list' %}" class="btn btn-light btn-lg">Shop Now</a>
+    </div>
+</section>
+
+<script>
+// Fallback if carousel doesn't work
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('heroCarousel');
+    const fallback = document.querySelector('.hero-section-fallback');
+    
+    if (carousel) {
+        // Check if carousel images loaded
+        const images = carousel.querySelectorAll('img');
+        let imagesLoaded = 0;
+        
+        images.forEach(img => {
+            if (img.complete && img.naturalHeight !== 0) {
+                imagesLoaded++;
+            } else {
+                img.onload = function() {
+                    imagesLoaded++;
+                    if (imagesLoaded === images.length) {
+                        // All images loaded, hide fallback
+                        if (fallback) fallback.style.display = 'none';
+                    }
+                };
+                img.onerror = function() {
+                    imagesLoaded++;
+                    if (imagesLoaded === images.length) {
+                        // Show fallback if images failed
+                        if (fallback) fallback.style.display = 'block';
+                        if (carousel) carousel.style.display = 'none';
+                    }
+                };
+            }
+        });
+        
+        // If no images, show fallback after 2 seconds
+        setTimeout(function() {
+            if (imagesLoaded === 0 && fallback) {
+                fallback.style.display = 'block';
+                if (carousel) carousel.style.display = 'none';
+            }
+        }, 2000);
+    }
+});
+</script>
+
 <!-- Categories Section -->
 <section class="categories-section py-5">
     <div class="container">
@@ -194,4 +247,104 @@
         </div>
     </div>
 </section>
+
+<!-- Special Offers Section -->
+<section class="special-offers-section py-5" style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
+    <div class="container">
+        <div class="section-title text-center mb-5">
+            <h2 class="fw-bold">Special Offers</h2>
+            <p class="text-muted">Limited-time deals on our most popular products</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Special Offer 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card offer-card h-100 border-0 shadow-sm">
+                    <div class="card-img-container position-relative">
+                        <img src="{% static 'images/Promotional banner images for special offers.png' %}" 
+                             class="card-img-top" 
+                             alt="Special Offers"
+                             style="height: 200px; object-fit: cover;"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center" style="display:none; background: linear-gradient(135deg, #2196F3, #4CAF50);">
+                            <div class="text-center text-white">
+                                <h4 class="fw-bold">Special Offers</h4>
+                                <p class="mb-0">Limited-time deals</p>
+                            </div>
+                        </div>
+                        <div class="badge bg-danger position-absolute top-0 end-0 m-3">-20% OFF</div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Premium Supplements</h5>
+                        <p class="card-text text-muted">Get 20% off on all premium supplements this month</p>
+                        <a href="{% url 'product_list' %}" class="btn btn-primary">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Special Offer 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card offer-card h-100 border-0 shadow-sm">
+                    <div class="card-img-container position-relative">
+                        <img src="{% static 'images/Homepage hero_banner image .png' %}" 
+                             class="card-img-top" 
+                             alt="Premium Quality"
+                             style="height: 200px; object-fit: cover;"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div class="card-img-overlay d-flex align-items-center justify-content-center" style="display:none; background: linear-gradient(135deg, #4CAF50, #2196F3);">
+                            <div class="text-center text-white">
+                                <h4 class="fw-bold">Premium Quality</h4>
+                                <p class="mb-0">Scientifically formulated</p>
+                            </div>
+                        </div>
+                        <div class="badge bg-success position-absolute top-0 end-0 m-3">NEW</div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">New Arrivals</h5>
+                        <p class="card-text text-muted">Discover our latest scientifically formulated supplements</p>
+                        <a href="{% url 'product_list' %}" class="btn btn-success">Explore</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Special Offer 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card offer-card h-100 border-0 shadow-sm">
+                    <div class="card-img-container position-relative" style="background: linear-gradient(135deg, #ff6b6b, #ffa500); height: 200px; display: flex; align-items: center; justify-content: center;">
+                        <div class="text-center text-white">
+                            <i class="fas fa-gift fa-3x mb-3"></i>
+                            <h4 class="fw-bold">Free Shipping</h4>
+                            <p class="mb-0">On orders over $50</p>
+                        </div>
+                        <div class="badge bg-warning position-absolute top-0 end-0 m-3">FREE</div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">Free Shipping</h5>
+                        <p class="card-text text-muted">Get free shipping on all orders over $50. No minimum purchase required!</p>
+                        <a href="{% url 'product_list' %}" class="btn btn-warning">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="text-center mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card border-0 shadow-lg" style="background: linear-gradient(135deg, #2196F3, #4CAF50);">
+                        <div class="card-body text-white text-center py-5">
+                            <h3 class="fw-bold mb-3">Ready to Transform Your Fitness Journey?</h3>
+                            <p class="lead mb-4">Join thousands of satisfied customers who trust FitFlow for their supplement needs</p>
+                            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                                <a href="{% url 'product_list' %}" class="btn btn-light btn-lg">Shop All Products</a>
+                                <a href="{% url 'register' %}" class="btn btn-outline-light btn-lg">Create Account</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 {% endblock %} 
