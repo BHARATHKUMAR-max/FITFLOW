@@ -3,37 +3,50 @@ Django==5.1.7
 asgiref==3.8.1
 sqlparse==0.5.3
 
-# Database (Render Postgres)
+# Database
 psycopg2-binary==2.9.9
 dj-database-url==2.1.0
 
 # Cloud storage and media
 cloudinary==1.44.1
 django-cloudinary-storage==0.3.0
-django-storages==1.14.5
 
 # Forms and UI
 django-crispy-forms==2.3
 crispy-bootstrap4==2024.10
 
-# Authentication (optional but present in codebase)
+# Authentication
 django-allauth==65.5.0
+
+# File storage
+django-storages==1.14.5
+
+# Security
+cryptography==44.0.2
 
 # Image processing
 Pillow==11.1.0
 
-# HTTP requests and utilities
+# HTTP requests
 requests==2.32.3
-python-dateutil==2.9.0.post0
-pytz==2024.2
-orjson==3.10.18
-pydantic==2.11.7
-pydantic-core==2.33.2
-click==8.1.7
-packaging==24.2
 
 # Environment variables
 python-dotenv==1.1.0
 
 # Production server
 gunicorn==23.0.0
+
+# Date/time utilities
+python-dateutil==2.9.0.post0
+pytz==2024.2
+
+# JSON handling
+orjson==3.10.18
+
+# Validation
+pydantic==2.11.7
+pydantic-core==2.33.2
+
+# Utilities
+click==8.1.7
+packaging==24.2
