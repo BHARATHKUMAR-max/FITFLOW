@@ -29,9 +29,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', '00o0_*h+5ww-trw56byaz3mjmi-)zm9d#e8^az$t!e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["fitflow-13.onrender.com", "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["fitflow-14.onrender.com", "localhost", "127.0.0.1"]
 
-CSRF_TRUSTED_ORIGINS = ["https://fitflow-13.onrender.com"]
+CSRF_TRUSTED_ORIGINS = ["https://fitflow-14.onrender.com"]
 
 
 
@@ -147,7 +147,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
