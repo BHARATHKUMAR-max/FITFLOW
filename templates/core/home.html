@@ -17,7 +17,7 @@
                      class="d-block w-100" 
                      alt="FitFlow Hero Banner"
                      style="height: 600px; object-fit: cover;"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                     onerror="this.onerror=null; this.src='{% static 'images/Homepage hero_banner image .png' %}';">
                 <!-- Animated promo image on the left -->
                 <img src="{% static 'images/Promotional banner images for special offers.png' %}"
                      alt="Special Offers"
@@ -39,7 +39,7 @@
                      class="d-block w-100" 
                      alt="Special Offers"
                      style="height: 600px; object-fit: cover;"
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                     onerror="this.onerror=null; this.src='{% static 'images/Promotional banner images for special offers.png' %}';">
                 <div class="carousel-caption" style="display:none; background: linear-gradient(135deg, #ff6b6b, #ffa500); padding: 40px; border-radius: 10px;">
                     <h1 class="display-4 fw-bold text-white">Special Offers</h1>
                     <p class="lead fw-bold text-white">Limited-time deals on our most popular products</p>
